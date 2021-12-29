@@ -7,6 +7,7 @@
         height="24"
         class="d-inline-block align-text-top mx-2"
       />
+      DayBook
     </a>
 
     <div class="d-flex">

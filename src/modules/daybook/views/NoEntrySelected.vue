@@ -4,7 +4,9 @@
             No hay nada seleccionado
         </h1>
     </div>
-  <Fab/>
+  <Fab
+    @on:click="createNewEntry"
+  />
 
 </template>
 
@@ -15,6 +17,11 @@ export default {
     components:{
         // Fab: defineAsyncComponent(()=>import("../components/Fab.vue"))
         Fab: defineAsyncComponent(() => import("../components/Fab.vue")),
+    },
+    methods:{
+        createNewEntry(){
+            this.$router.push({name: 'entry', params: {id:'new'}})
+        }
     }
 }
 </script>

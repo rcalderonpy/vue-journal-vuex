@@ -2,17 +2,26 @@
 
 // }
 
-export const setEntries = (/*{commit}*/)=>{
-
+export const setEntries = (state, entries)=>{
+    state.entries = [...state.entries, ...entries]
+    state.isLoading = false
 
 }
 
-export const updateEntries = (/*{commit}*/)=>{
+export const updateEntry = (state, entry)=>{
+    const idx = state.entries.map(e=>e.id).indexOf(entry.id)
+    state.entries[idx]=entry 
+}
 
+export const addEntry = (state, entry)=>{
+    state.entries = [entry, ...state.entries]
     
 }
 
-export const addEntries = (/*{commit}*/)=>{
+export const deleteEntry = (state, id)=>{
+    // const idx = state.entries.map(e=>e.id).indexOf(id)
+    // state.entries.splice(idx,1) 
 
-    
+    // otra manera más sencilla
+    state.entries = state.entries.filter(entry => entry.id !== id)
 }
