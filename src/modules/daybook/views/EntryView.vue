@@ -36,11 +36,12 @@
 
     <hr />
 
-    <!-- <img
-      src="https://i0.wp.com/hipertextual.com/wp-content/uploads/2021/11/doctor-strange-en-spider-man-no-way-home_2560x1440_8490.jpg?fit=1200%2C675&ssl=1"
+    <img
+      v-if="entry.picture && !localImage"
+      :src="entry.picture"
       alt="entry-picture"
       class="img-thumbnail"
-    /> -->
+    />
 
     <img
       v-if="localImage"
@@ -65,6 +66,7 @@ import { defineAsyncComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
 import getDayMonthYear from "../helpers/getDayMonthYear";
 import Swal from 'sweetalert2'
+import uploadImage from "../helpers/uploadImage";
 
 export default {
   props: {
@@ -110,6 +112,10 @@ export default {
       })
       Swal.showLoading()
 
+      const picture = await uploadImage(this.file)
+
+      this.entry.picture = picture
+
       if(this.entry.id){
         console.log('Actualizando entrada')
         await this.updateEntry(this.entry)
@@ -120,6 +126,7 @@ export default {
         this.$router.push({name: 'entry', params:{id}})
       }
 
+      this.localImage = null
       Swal.fire('Guardado', 'Entrada registrada con éxito', 'success')
       
     },
@@ -198,6 +205,7 @@ export default {
   watch: {
     id() {
       this.loadEntry();
+      this.localImage = null
     },
   },
 };
@@ -221,5 +229,6 @@ img {
   bottom: 150px;
   right: 20px;
   box-shadow: 0 5px 10px rgba($color: #000000, $alpha: 0.2);
+
 }
 </style>
